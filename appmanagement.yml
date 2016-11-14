@@ -1,0 +1,4 @@
+---
+- hosts: macs
+  roles:
+    - appmanager
