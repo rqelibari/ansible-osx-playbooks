@@ -8,3 +8,11 @@
   check_mode: no
   tags:
     - macos_lowest_available_group_id
+
+- name: "Get lowest system user id (e.g. max(uid) < 500) still available"
+  shell: "dscl /Local/Default -list /Users uid | awk '$2 < 500 { print $2+1; }' | sort -nr | head -1"
+  register: macos_lowest_available_user_id
+  changed_when: false
+  check_mode: no
+  tags:
+    - macos_lowest_available_user_id
