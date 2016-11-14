@@ -3,7 +3,11 @@
 # who has no administrator rights on the system, besides installing those apps,
 # which do not need any special rights.
 
-# - Assure "appmanager" group exists on system and has a gid below of 500
+# - Assure "appmanager" group exists on system and has a gid of highest
+#   available gid below of 500
 # - Assure system user is appmanager exists on the system and has a uid
-#   below of 500
-# - Assure app manager user has sufficent rights on the local applications folder
+#   of highest available uid below of 500
+# - Assure app manager user has sufficent rights on the local
+#   applications folder. That being:
+#   - /usr/local for CLI applications
+#   - /Applications to move GUI Applications to
