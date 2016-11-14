@@ -3,5 +3,5 @@
 # who has no administrator rights on the system, besides installing those apps,
 # which do not need any special rights.
 
-# Assure app admin user exists on the system and has a home folder
-# Assure app admin user has sufficent rights on the local applications folder
+# Assure app manager user exists on the system and has a uid below of 500
+# Assure app manager user has sufficent rights on the local applications folder
