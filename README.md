@@ -57,4 +57,6 @@ Then choose a playbook you want to run and execute the following from inside the
 Replace *{{playbook-to-run}}* with the name of the playbook, you want to run.
 
 ## Vault Password
-**Important**: The vault pass for vaults in this repo is *vaultPassword*
+**Important**: The [vault][6] pass for vaults in this repo is *vaultPassword*
+
+[6]: http://docs.ansible.com/ansible/playbooks_vault.html
