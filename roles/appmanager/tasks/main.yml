@@ -1,0 +1,7 @@
+---
+# Makes sure a local app manager exists. A local app manager is a system user (uid <= 500),
+# who has no administrator rights on the system, besides installing those apps,
+# which do not need any special rights.
+
+# Assure app admin user exists on the system and has a home folder
+# Assure app admin user has sufficent rights on the local applications folder
