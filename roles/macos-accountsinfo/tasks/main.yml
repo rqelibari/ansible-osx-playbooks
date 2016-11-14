@@ -1,2 +1,10 @@
 ---
 # Collect information about users and groups on macOS systems.
+
+- name: "Get lowest system group id (e.g. max(gid) < 500) still available"
+  shell: "dscl /Local/Default -list /Users gid | awk '$2 < 500 { print $2+1; }' | sort -nr | head -1"
+  register: macos_lowest_available_group_id
+  changed_when: false
+  check_mode: no
+  tags:
+    - macos_lowest_available_group_id
