@@ -1,0 +1,3 @@
+---
+# Assure "appmanager" group exists on system and has a gid of highest
+# available gid below of 500
