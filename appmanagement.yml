@@ -1,4 +1,5 @@
 ---
 - hosts: macs
+  gather_facts: false
   roles:
     - appmanager
