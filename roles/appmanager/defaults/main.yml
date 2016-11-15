@@ -6,3 +6,5 @@ appmanager:
   name: "Local App Admin"
   user: lappadmin
   group: appmanager
+  home: "/var/lappadmin"
+  shell: "/bin/zsh"

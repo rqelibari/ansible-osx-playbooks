@@ -1,3 +1,16 @@
 ---
 # Assure system user is appmanager exists on the system and has a uid
 # of highest available uid below of 500
+
+- name: "Assure appmanager user exists as a system user on system"
+  user:
+    state: present
+    name: "{{appmanager.user}}"
+    comment: "{{appmanager.name}}"
+    group: "{{appmanager.group}}"
+    system: yes
+    createhome: yes
+    home: "{{appmanager.home}}"
+    password: "{{appmanager_pw}}"
+    shell: "{{appmanager.shell}}"
+    update_password: "on_create"
