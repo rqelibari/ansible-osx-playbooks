@@ -3,5 +3,6 @@
 # appmanager user                                                             #
 ###############################################################################
 appmanager:
-  name: lappadmin  #local app admin
+  name: "Local App Admin"
+  user: lappadmin
   group: appmanager
