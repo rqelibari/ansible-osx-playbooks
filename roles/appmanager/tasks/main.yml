@@ -13,3 +13,4 @@
 #   applications folder. That being:
 #   - /usr/local for CLI applications
 #   - /Applications to move GUI Applications to
+- include: rights-on-folders.yml

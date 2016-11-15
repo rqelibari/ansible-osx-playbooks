@@ -1,0 +1,5 @@
+---
+# - Assure app manager user has sufficent rights on the local
+#   applications folder. That being:
+#   - /usr/local for CLI applications
+#   - /Applications to move GUI Applications to
