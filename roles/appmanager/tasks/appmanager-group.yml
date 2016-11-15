@@ -1,3 +1,9 @@
 ---
 # Assure "appmanager" group exists on system and has a gid of highest
 # available gid below of 500
+
+- name: "Assure appmanager group exists as a system group on system"
+  group:
+    name: "{{appmanager.group}}"
+    state: present
+    system: yes
