@@ -8,6 +8,7 @@
 - include: appmanager-group.yml
 # - Assure system user is appmanager exists on the system and has a uid
 #   of highest available uid below of 500
+- include: appmanager-user.yml
 # - Assure app manager user has sufficent rights on the local
 #   applications folder. That being:
 #   - /usr/local for CLI applications

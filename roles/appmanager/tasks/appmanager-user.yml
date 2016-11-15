@@ -1,0 +1,3 @@
+---
+# Assure system user is appmanager exists on the system and has a uid
+# of highest available uid below of 500
