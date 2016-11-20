@@ -6,11 +6,17 @@
 # Assure "appmanager" group exists on system and has a gid of highest
 # available gid below of 500
 - include: appmanager-group.yml
+  tags:
+    - appmanager-group
 # - Assure system user is appmanager exists on the system and has a uid
 #   of highest available uid below of 500
 - include: appmanager-user.yml
+  tags:
+    - appmanager-user
 # - Assure app manager user has sufficent rights on the local
 #   applications folder. That being:
 #   - /usr/local for CLI applications
 #   - /Applications to move GUI Applications to
 - include: rights-on-folders.yml
+  tags:
+    - rights-on-folders
