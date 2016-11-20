@@ -13,4 +13,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# Install and configure vim for all users. Also install macvim.
+# 1. Install and configure vim for all users
+- include: install_and_configure_vim.yml
+  become_user: "{{user}}"
+  become: yes
+  with_items: "{{f_userslist}}"
+  loop_control:
+    label: "{{user}}"
+    loop_var: user
+  tags:
+    - install_vim
+
+# 2. Install macvim
+- name: "Install macvim."
+  homebrew_cask:
+    - name: "macvim"
+    - state: present
+  tags:
+    - install_macvim
