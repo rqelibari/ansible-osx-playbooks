@@ -16,3 +16,13 @@
     label: "{{folder.path}}"
     loop_var: folder
   become: yes
+
+- name: "Ensure appmanager group can modify contents of appmanager folders."
+  command: "chmod +a 'group:{{ appmanager.group }} allow {{folder.rights}}' {{folder.path}}"
+  args:
+    warn: no
+  with_items: "{{appmanager_folders}}"
+  loop_control:
+    label: "{{folder.path}}"
+    loop_var: folder
+  become: yes
