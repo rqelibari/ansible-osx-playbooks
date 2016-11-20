@@ -28,4 +28,5 @@
     password: "{{appmanager_pw}}"
     shell: "{{appmanager.shell}}"
     update_password: "on_create"
+  become: yes
   register: "r_appmanager_user"
