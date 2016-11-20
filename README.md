@@ -30,6 +30,7 @@ Currently there are the following roles:
 |Role         |Description                                                                                                                                                                                                  |
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |appmanager   |Makes sure a local app manager exists. A local app manager is a system user (uid <= 500), who has no administrator rights on the system, besides installing those apps, which do not need any special rights.|
+|homebrew     |Ensure homebrew is installed on the local machine. Homebrew needs a folder, where it can be installed to and a link in /usr/local/bin.|
 
 and the following playbooks:
 

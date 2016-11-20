@@ -17,12 +17,12 @@
 # appmanager user                                                             #
 ###############################################################################
 appmanager:
-  name: "Local App Admin"
-  user: lappadmin
+  name: "Local Appmanager"
+  user: lappmanager
   group: appmanager
-  home: "/var/lappadmin"
+  home: "/var/lappmanager"
   shell: "/bin/zsh"
 
 appmanager_folders:
-  - {path: "/usr/local/bin", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
+  - {path: "/usr/local", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
   - {path: "/Applications", rights: "search,add_subdirectory"}

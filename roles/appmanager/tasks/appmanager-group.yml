@@ -7,4 +7,5 @@
     name: "{{appmanager.group}}"
     state: present
     system: yes
+  become: yes
   register: "r_appmanager_group"

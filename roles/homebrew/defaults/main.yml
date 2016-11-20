@@ -13,20 +13,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# Assure system user is appmanager exists on the system and has a uid
-# of highest available uid below of 500
-
-- name: "Assure appmanager user exists as a system user on system"
-  user:
-    state: present
-    name: "{{appmanager.user}}"
-    comment: "{{appmanager.name}}"
-    group: "{{appmanager.group}}"
-    system: yes
-    createhome: yes
-    home: "{{appmanager.home}}"
-    password: "{{appmanager_pw}}"
-    shell: "{{appmanager.shell}}"
-    update_password: "on_create"
-  become: yes
-  register: "r_appmanager_user"
+###############################################################################
+# homebrew                                                                    #
+###############################################################################
+homebrew:
+  install_path: "/usr/local/Homebrew"
+  repo: "https://github.com/Homebrew/brew"
+  bin_path: "/usr/local/bin"
