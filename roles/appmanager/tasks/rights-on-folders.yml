@@ -1,5 +1,18 @@
 ---
 # - Assure app manager user has sufficent rights on the local
-#   applications folder. That being:
+#   applications folder and that those folder exist. That being:
 #   - /usr/local for CLI applications
 #   - /Applications to move GUI Applications to
+
+- name: "Ensure appmanager folders exist and are owned by root:admin."
+  file:
+    path: "{{folder.path}}"
+    mode: "02775"
+    owner: root
+    group: admin
+    state: directory
+  with_items: "{{appmanager_folders}}"
+  loop_control:
+    label: "{{folder.path}}"
+    loop_var: folder
+  become: yes
