@@ -17,3 +17,4 @@
   gather_facts: false
   roles:
     - appmanager
+    - {role: homebrew, become: true, become_user: "lappmanager"}
