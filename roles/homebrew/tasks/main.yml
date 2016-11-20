@@ -15,11 +15,20 @@
 
 # Ensures homebrew is installed on the local machine.
 
+- stat: path="{{ homebrew.install_path }}"
+  register: r_hbip
+
+- fail: msg="Homebrew install path is already occupied."
+  when: r_hbip.stat.isdir is defined and r_hbip.stat.isdir == False
+
+- fail: msg="Homebrew install path is not writable."
+  when: r_hbip.stat.isdir is defined and r_hbip.stat.isdir and r_hbip.stat.writeable == False
+
 - name: "Ensure Homebrew install directory exists."
   file:
     path: "{{ homebrew.install_path }}"
-    mode: '2775'
     state: directory
+  when: r_hbip.stat.isdir is not defined
 
 - name: Ensure Homebrew is installed.
   git:
@@ -33,11 +42,14 @@
 - name: "Ensure Homebrew bin directory exists"
   file:
     path: "{{ homebrew.bin_path }}"
-    mode: '2775'
     state: directory
+
+- stat: path="{{ homebrew.bin_path }}"
+  register: r_hbbp
 
 - name: "Ensure brew bin is linked to {{ homebrew.bin_path }}"
   file:
     src: "{{ homebrew.install_path }}/bin/brew"
     dest: "{{ homebrew.bin_path }}/brew"
     state: link
+  when: r_hbbp.stat.isdir is defined and r_hbbp.stat.isdir and r_hbbp.stat.writeable
