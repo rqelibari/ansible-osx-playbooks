@@ -17,10 +17,10 @@
 # appmanager user                                                             #
 ###############################################################################
 appmanager:
-  name: "Local App Admin"
-  user: lappadmin
+  name: "Local Appmanager"
+  user: lappmanager
   group: appmanager
-  home: "/var/lappadmin"
+  home: "/var/lappmanager"
   shell: "/bin/zsh"
 
 appmanager_folders:
