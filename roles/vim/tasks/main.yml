@@ -21,7 +21,7 @@
     - "{{f_userslist}}"
     - "{{f_usershome}}"
   loop_control:
-    label: "{{user}}"
+    label: "{{user.1}}"
     loop_var: user
   tags:
     - install_vim
