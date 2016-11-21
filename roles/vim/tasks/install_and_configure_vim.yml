@@ -15,7 +15,7 @@
 
 - name: 'Install vimrc.'
   copy:
-    src: ".vimrc"
+    src: "vimrc"
     dest: "{{user.1}}/.vimrc"
     force: no
 
