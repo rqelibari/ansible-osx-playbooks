@@ -13,23 +13,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# 1. Install and configure vim for all users
-- include: install_and_configure_vim.yml
-  become_user: "{{user.0}}"
-  become: yes
-  with_together:
-    - "{{f_userslist}}"
-    - "{{f_usershome}}"
-  loop_control:
-    label: "{{user}}"
-    loop_var: user
-  tags:
-    - install_vim
+- name: 'Install vimrc.'
+  copy:
+    src: ".vimrc"
+    dest: "{{user.1}}/.vimrc"
+    force: no
 
-# 2. Install macvim
-- name: "Install macvim."
-  homebrew_cask:
-    - name: "macvim"
-    - state: present
-  tags:
-    - install_macvim
+- block: 
+    - name: "Ensure vim autoload directory exists."
+      file: path="{{user.1}}/.vim/autoload" state=directory
+
+    - name: "Ensure vim-plug is installed and up to date."
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: "{{user.1}}/.vim/autoload/plug.vim"
+        force: yes
+
+    - name: "Ensure vim-plug plugins are installed."
+      command: "vim '+silent! +PlugUpdate!' +qall!"
