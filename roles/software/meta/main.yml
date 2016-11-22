@@ -13,4 +13,4 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-dependencies: ['homebrew', 'homebrew-cask', 'mas-cli']
+dependencies: ['homebrew', 'homebrew-cask', 'mas-cli', 'vlc', 'little-snitch']
