@@ -37,4 +37,4 @@
 
 - set_fact:
     f_userslist: "{{r_userslist.stdout_lines}}"
-    f_usershome: "{{r_userhomes.stdout_lines}}"
+    f_usershome: "{{r_userhomes.results}}"
