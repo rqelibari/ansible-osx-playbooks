@@ -18,8 +18,8 @@
 
 - name: "Install AACS library."
   get_url:
-  	url: 'http://vlc-bluray.whoknowsmy.name/files/mac/libaacs.dylib'
-  	dest: '/usr/local/lib/libaacs.dylib'
+    url: 'http://vlc-bluray.whoknowsmy.name/files/mac/libaacs.dylib'
+    dest: '/usr/local/lib/libaacs.dylib'
     mode: '755'
     force: yes
 
@@ -29,6 +29,7 @@
     mode: "755"
     owner: root
     group: wheel
+    state: directory
   become: yes
   become_user: root
 
