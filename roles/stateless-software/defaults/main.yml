@@ -51,7 +51,6 @@ homebrew_cask_apps_noadmin:
   # Multimedia
   - sketch
   - blender
-  - vlc
   - skype
 
   # Development
