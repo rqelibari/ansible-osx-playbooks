@@ -28,3 +28,6 @@
   git:
     repo: "https://github.com/tarjoilija/zgen.git"
     dest: "{{ user.1.stdout }}/.zsh/zgen"
+
+- name: "Install plugins."
+  command: /bin/zsh -c echo
