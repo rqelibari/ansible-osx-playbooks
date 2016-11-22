@@ -16,17 +16,17 @@
 - name: 'Install vimrc.'
   copy:
     src: "vimrc"
-    dest: "{{user.1}}/.vimrc"
-    force: no
+    dest: "{{user.1.stdout}}/.vimrc"
+    force: yes
 
 - block: 
     - name: "Ensure vim autoload directory exists."
-      file: path="{{user.1}}/.vim/autoload" state=directory
+      file: path="{{user.1.stdout}}/.vim/autoload" state=directory
 
     - name: "Ensure vim-plug is installed and up to date."
       get_url:
         url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        dest: "{{user.1}}/.vim/autoload/plug.vim"
+        dest: "{{user.1.stdout}}/.vim/autoload/plug.vim"
         force: yes
 
     - name: "Ensure vim-plug plugins are installed."

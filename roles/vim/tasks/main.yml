@@ -21,7 +21,7 @@
     - "{{f_userslist}}"
     - "{{f_usershome}}"
   loop_control:
-    label: "{{user.1}}"
+    label: "{{user.1.stdout}}"
     loop_var: user
   tags:
     - install_vim
@@ -29,7 +29,7 @@
 # 2. Install macvim
 - name: "Install macvim."
   homebrew_cask:
-    - name: "macvim"
-    - state: present
+      name: "macvim"
+      state: present
   tags:
     - install_macvim
