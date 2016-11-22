@@ -46,6 +46,7 @@ homebrew_cask_apps_noadmin:
   - google-chrome
   - firefox
   - opera
+  - polymail
 
   # Multimedia
   - sketch
@@ -58,6 +59,11 @@ homebrew_cask_apps_noadmin:
   - sublime-text
   - visual-studio-code
   - hopper-disassembler
+  - sequel-pro
+  - bit-slicer
+
+  # Finances
+  - moneymoney
 
   # Utilities
   - cryptomator
@@ -65,6 +71,7 @@ homebrew_cask_apps_noadmin:
   - bartender
   - istat-menus
   - sublime
+  - transmission
 
   # Plugins
   - suspicious-package
