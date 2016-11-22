@@ -30,7 +30,11 @@ set modelines=1		" check just the last line of a file for a modeline
 
 " Section Colors {{{
 syntax enable
-colorscheme srcery
+try
+    colorscheme srcery
+catch /^Vim\%((\a\+)\)\=:E185/
+    " deal with it
+endtry
 filetype indent on  " load filetype-specific indent files
 " }}}
 
