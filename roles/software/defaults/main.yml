@@ -39,7 +39,6 @@ homebrew_installed_packages_noadmin:
   - tree
   - bchunk
   - ffmpeg
-  - mas
 
 homebrew_installed_packages_admin: []
 
