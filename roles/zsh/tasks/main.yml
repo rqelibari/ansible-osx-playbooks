@@ -21,7 +21,7 @@
     - "{{f_userslist}}"
     - "{{f_usershome}}"
   loop_control:
-    label: "{{user.1}}"
+    label: "{{user.1.stdout}}"
     loop_var: user
   tags:
     - install_zsh

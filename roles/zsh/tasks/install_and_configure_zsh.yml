@@ -14,16 +14,17 @@
 #   limitations under the License.
 
 - name: "Ensure zsh is the default login shell for user."
-  user: "name={{ user.0 }}  shell=/bin/zsh state=present"
+  command: "chsh -s /bin/zsh {{user.0}}"
   become: true
+  become_user: root
 
 - name: 'Install zshrc.'
   copy:
-    src: ".zshrc"
-    dest: "{{user.1}}/.zshrc"
+    src: "zshrc"
+    dest: "{{user.1.stdout}}/.zshrc"
     force: no
 
 - name: "Ensure zgen github repository is checked out."
   git:
     repo: "https://github.com/tarjoilija/zgen.git"
-    dest: "{{ user.1 }}/.zsh/zgen"
+    dest: "{{ user.1.stdout }}/.zsh/zgen"
