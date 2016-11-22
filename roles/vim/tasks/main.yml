@@ -14,15 +14,24 @@
 #   limitations under the License.
 
 # 1. Install and configure vim for all users
-- include: install_and_configure_vim.yml
-  become_user: "{{user.0}}"
-  become: yes
-  with_together:
-    - "{{f_userslist}}"
-    - "{{f_usershome}}"
-  loop_control:
-    label: "{{user.1.stdout}}"
-    loop_var: user
+- block:
+    - include: install_and_configure_vim.yml
+      become_user: "{{user.0}}"
+      become: yes
+      with_together:
+        - "{{f_userslist}}"
+        - "{{f_usershome}}"
+      loop_control:
+        label: "{{user.1.stdout}}"
+        loop_var: user
+  when: forall
+  tags:
+    - install_vim
+
+# Install and configure vim for current user only
+- block:
+    - include: install_and_configure_vim.yml
+  when: not forall
   tags:
     - install_vim
 
