@@ -25,20 +25,18 @@
     owner: root
     group: admin
     state: directory
-  with_items: "{{appmanager_folders}}"
+  with_items: "{{appmanager_folders_with_acl}}"
   loop_control:
     label: "{{folder.path}}"
     loop_var: folder
-  when: "r_appmanager_user.changed or r_appmanager_group.changed"
   become: yes
 
-- name: "Ensure appmanager group can modify contents of appmanager folders."
-  command: "chmod +a 'group:{{ appmanager.group }} allow {{folder.rights}}' {{folder.path}}"
+- name: "Ensure appmanager and admin group can modify contents of appmanager folders."
+  command: "chmod +a '{{ folder.entity }} allow {{folder.rights}}' {{folder.path}}"
   args:
     warn: no
-  with_items: "{{appmanager_folders}}"
+  with_items: "{{appmanager_folders_with_acl}}"
   loop_control:
     label: "{{folder.path}}"
     loop_var: folder
-  when: "r_appmanager_user.changed or r_appmanager_group.changed"
   become: yes

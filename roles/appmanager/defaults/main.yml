@@ -23,6 +23,7 @@ appmanager:
   home: "/var/lappmanager"
   shell: "/bin/zsh"
 
-appmanager_folders:
-  - {path: "/usr/local", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
-  - {path: "/Applications", rights: "search,add_subdirectory"}
+appmanager_folders_with_acl:
+  - {path: "/usr/local", entity: "group:admin", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
+  - {path: "/usr/local", entity: "group:{{appmanager.group}}", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
+  - {path: "/Applications", entity: "group:{{appmanager.group}}", rights: "search,add_subdirectory"}
