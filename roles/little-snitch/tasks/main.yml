@@ -25,11 +25,14 @@
 
 - name: "Ensure little snitch config exist."
   copy: "src={{ item }} dest='/Library/Application Support/Objective Development/Little Snitch' owner=root group=wheel mode=600"
-      with_fileglob: "*.xpl"
+  with_fileglob: "*.xpl"
   become: true
   become_user: root
 
 - name: "Install little snitch."
   homebrew_cask: name=little-snitch state=present
-  become: true
+
+- name: "Install little snitch package."
+  shell: 'open "$(brew --prefix)/Caskroom/little-snitch/3.7/Little Snitch Installer.app"'
+  become: yes
   become_user: root
