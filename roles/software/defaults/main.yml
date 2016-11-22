@@ -54,6 +54,7 @@ homebrew_cask_apps_noadmin:
   - skype
 
   # Development
+  - sourcetree
   - sublime-text
   - visual-studio-code
   - hopper-disassembler
