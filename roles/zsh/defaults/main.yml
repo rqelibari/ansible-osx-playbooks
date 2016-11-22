@@ -13,24 +13,4 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# Install and configure zsh for all users.
-- block:
-    - include: install_and_configure_zsh.yml
-      become_user: "{{user.0}}"
-      become: yes
-      with_together:
-        - "{{f_userslist}}"
-        - "{{f_usershome}}"
-      loop_control:
-        label: "{{user.1.stdout}}"
-        loop_var: user
-  when: forall
-  tags:
-    - install_zsh
-
-# Install and configure zsh for current user only
-- block:
-    - include: install_and_configure_zsh.yml
-  when: not forall
-  tags:
-    - install_zsh
+forall: yes
