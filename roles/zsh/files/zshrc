@@ -32,3 +32,5 @@ if ! zgen saved; then
   # generate the init script from plugins above
   zgen save
 fi
+
+alias pprint="/usr/libexec/PlistBuddy -c 'Print'"
