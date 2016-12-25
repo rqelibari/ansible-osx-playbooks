@@ -34,7 +34,7 @@
 
 - name: "Ensure keys database exists."
   get_url:
-    url: 'http://vlc-bluray.whoknowsmy.name/files/KEYDB.cfg'
+    url: 'http://www.labdv.com/aacs/KEYDB.cfg'
     dest: '/Library/Preferences/aacs/KEYDB.cfg'
     mode: '755'
     force: yes
