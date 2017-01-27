@@ -1,0 +1,97 @@
+---
+#   Copyright 2016 Rezart Qelibari
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+# defaults file for appinstaller
+mas_apps:
+  - { id: 1037126344, name: "Apple Configurator 2" }
+  - { id: 530458789, name: "Frank DeLoupe" }
+  - { id: 748212890, name: "Memory Cleaner" }
+  - { id: 409183694, name: "Keynote" }
+  - { id: 540348655, name: "Monosnap" }
+  - { id: 890805912, name: "Newsflow" }
+  - { id: 918858936, name: "Airmail 3" }
+  - { id: 470158793, name: "Keka" }
+  - { id: 494995266, name: "Tap Forms" }
+  - { id: 404747434, name: "MenuPop" }
+  - { id: 407963104, name: "Pixelmator" }
+  - { id: 747648890, name: "Telegram" }
+  - { id: 409201541, name: "Pages" }
+  - { id: 409203825, name: "Numbers" }
+
+homebrew_taps: []
+
+homebrew_installed_packages_noadmin:
+  - ssh-copy-id
+  - pv
+  - python3
+  - tree
+  - bchunk
+  - ffmpeg
+
+homebrew_installed_packages_admin: []
+
+homebrew_cask_apps_noadmin:
+  - google-chrome
+  - firefox
+  - opera
+  - polymail
+
+  # Multimedia
+  - sketch
+  - blender
+  - skype
+  - mathtype
+
+  # Development
+  - sourcetree
+  - sublime-text
+  - visual-studio-code
+  - hopper-disassembler
+  - sequel-pro
+  - bit-slicer
+
+  # Finances
+  - moneymoney
+
+  # Utilities
+  - cryptomator
+  - spectacle
+  - bartender
+  - istat-menus
+  - sublime
+  - transmission
+
+  # Plugins
+  - suspicious-package
+  - qlcolorcode
+  - qlstephen
+  - qlmarkdown
+  - provisionql
+  - qlprettypatch
+  - quicklook-csv
+  - webpquicklook
+
+homebrew_cask_apps_admin:
+  # Firewall & Protective
+  - micro-snitch
+
+  # Plugins
+  - qlimagesize
+  - quicklook-json
+  - betterzipql
+
+  # Drivers & Services
+  - wacom-bamboo-tablet
+  - tuxera-ntfs

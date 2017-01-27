@@ -13,31 +13,26 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-- name: "Install vlc."
-  homebrew_cask: name=vlc state=present
-
-- name: "Install AACS library."
-  get_url:
-    url: 'http://vlc-bluray.whoknowsmy.name/files/mac/libaacs.dylib'
-    dest: '/usr/local/lib/libaacs.dylib'
-    mode: '755'
-    force: yes
-
-- name: "Ensure config directory for key database exists."
+- name: "Ensure little snitch directory exists."
   file:
-    path: "/Library/Preferences/aacs"
-    mode: "755"
+    path: "/Library/Application Support/Objective Development/Little Snitch"
     owner: root
     group: wheel
-    state: directory
-  become: yes
+    mode: "755"
+    state: "directory"
+  become: true
   become_user: root
 
-- name: "Ensure keys database exists."
-  get_url:
-    url: 'http://www.labdv.com/aacs/KEYDB.cfg'
-    dest: '/Library/Preferences/aacs/KEYDB.cfg'
-    mode: '755'
-    force: yes
+- name: "Ensure little snitch config exist."
+  copy: "src={{ item }} dest='/Library/Application Support/Objective Development/Little Snitch' owner=root group=wheel mode=600"
+  with_fileglob: "*.xpl"
+  become: true
+  become_user: root
+
+- name: "Install little snitch."
+  homebrew_cask: name=little-snitch state=present
+
+- name: "Install little snitch package."
+  shell: 'open "$(brew --prefix)/Caskroom/little-snitch/3.7/Little Snitch Installer.app"'
   become: yes
   become_user: root
