@@ -24,6 +24,25 @@ appmanager:
   shell: "/bin/zsh"
 
 appmanager_folders_with_acl:
-  - {path: "/usr/local", entity: "group:admin", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
-  - {path: "/usr/local", entity: "group:{{appmanager.group}}", rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"}
-  - {path: "/Applications", entity: "group:{{appmanager.group}}", rights: "search,add_subdirectory"}
+  - path: "/usr/local"
+    acl:
+      - entity: "group:admin"
+        rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"
+      - entity: "group:{{appmanager.group}}"
+        rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"
+  - path: "/usr/local/bin"
+    acl:
+      - entity: "group:admin"
+        rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"
+      - entity: "group:{{appmanager.group}}"
+        rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"
+  - path: "/usr/local/lib"
+    acl:
+      - entity: "group:admin"
+        rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"
+      - entity: "group:{{appmanager.group}}"
+        rights: "list,search,add_file,add_subdirectory,delete_child,file_inherit,directory_inherit"
+  - path: "/Applications"
+    acl:
+      - entity: "group:{{appmanager.group}}"
+        rights: "search,add_subdirectory"

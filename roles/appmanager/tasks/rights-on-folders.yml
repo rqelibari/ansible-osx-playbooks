@@ -32,11 +32,13 @@
   become: yes
 
 - name: "Ensure appmanager and admin group can modify contents of appmanager folders."
-  command: "chmod +a '{{ folder.entity }} allow {{folder.rights}}' {{folder.path}}"
+  command: "chmod +a '{{ folder.1.entity }} allow {{folder.1.rights}}' {{folder.0.path}}"
   args:
     warn: no
-  with_items: "{{appmanager_folders_with_acl}}"
+  with_subelements:
+    - "{{appmanager_folders_with_acl}}"
+    - acl
   loop_control:
-    label: "{{folder.path}}"
+    label: "{{folder.0.path}}"
     loop_var: folder
   become: yes
