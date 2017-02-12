@@ -13,6 +13,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-- include: mas.yml
+
 - include: homebrew.yml
+  when: item.tool == "brew"
+  with_items: "{{ software }}"
+  tags:
+    - install_homebrew_apps
+
 - include: homebrew-cask.yml
+  when: item.tool == "cask"
+  with_items: "{{ software }}"
+  tags:
+    - install_homebrew_cask_apps
+
+- include: mas.yml
+  when: item.tool == "mas"
+  with_items: "{{ software }}"
+  tags:
+    - install_mas

@@ -13,85 +13,112 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# defaults file for appinstaller
-mas_apps:
-  - { id: 1037126344, name: "Apple Configurator 2" }
-  - { id: 530458789, name: "Frank DeLoupe" }
-  - { id: 748212890, name: "Memory Cleaner" }
-  - { id: 409183694, name: "Keynote" }
-  - { id: 540348655, name: "Monosnap" }
-  - { id: 890805912, name: "Newsflow" }
-  - { id: 918858936, name: "Airmail 3" }
-  - { id: 470158793, name: "Keka" }
-  - { id: 494995266, name: "Tap Forms" }
-  - { id: 404747434, name: "MenuPop" }
-  - { id: 407963104, name: "Pixelmator" }
-  - { id: 747648890, name: "Telegram" }
-  - { id: 409201541, name: "Pages" }
-  - { id: 409203825, name: "Numbers" }
+software:
+  # Python
+  - { name: "python3", admin: False, tool: "brew" }
+  - { name: "pyenv", admin: False, tool: "brew" }
+  - { name: "pyenv-virtualenvwrapper", admin: False, tool: "brew" }
 
-homebrew_taps: []
+  # node, npm
+  - { name: "node", admin: False, tool: "brew" }
+  - { name: "npm", admin: False, tool: "brew" }
 
-homebrew_installed_packages_noadmin:
-  - ssh-copy-id
-  - pv
-  - python3
-  - tree
-  - bchunk
-  - ffmpeg
+  # Virtualization
+  - { name: "virtualbox", admin: False, tool: "cask" }
+  - { name: "virtualbox-extension-pack", admin: False, tool: "cask" }
 
-homebrew_installed_packages_admin: []
-
-homebrew_cask_apps_noadmin:
-  - google-chrome
-  - firefox
-  - opera
-  - polymail
-
-  # Multimedia
-  - sketch
-  - blender
-  - skype
-  - mathtype
-
-  # Development
-  - sourcetree
-  - sublime-text
-  - visual-studio-code
-  - hopper-disassembler
-  - sequel-pro
-  - bit-slicer
+  # Ultimate Toolchain
+  - { name: "java", admin: False, tool: "cask" }
+  - { name: "maven", admin: False, tool: "brew" }
 
   # Finances
-  - moneymoney
+  - { name: "moneymoney", admin: False, tool: "cask" }
 
-  # Utilities
-  - cryptomator
-  - spectacle
-  - bartender
-  - istat-menus
-  - sublime
-  - transmission
+  # Office
+  - { id: 409201541, name: "Pages", tool: "mas" }
+  - { id: 409183694, name: "Keynote", tool: "mas" }
+  - { id: 409203825, name: "Numbers", tool: "mas" }
 
-  # Plugins
-  - suspicious-package
-  - qlcolorcode
-  - qlstephen
-  - qlmarkdown
-  - provisionql
-  - qlprettypatch
-  - quicklook-csv
-  - webpquicklook
+  # Graphics
+  - { id: 407963104, name: "Pixelmator", tool: "mas" }
+  - { name: "wacom-bamboo-tablet", admin: True, tool: "cask" }
 
-homebrew_cask_apps_admin:
+  # Misc GUI Utils
+  - { name: "cryptomator", admin: False, tool: "cask" }
+  - { name: "spectacle", admin: False, tool: "cask" }
+  - { name: "bartender", admin: False, tool: "cask" }
+  - { name: "istat-menus", admin: False, tool: "cask" }
+  # > Add subtitles to movies
+  - { name: "sublime", admin: False, tool: "cask" }
+  - { name: "transmission", admin: False, tool: "cask" }
+  - { name: "launchbar", admin: False, tool: "cask" }
+  - { id: 1037126344, name: "Apple Configurator 2", tool: "mas" }
+  - { id: 530458789, name: "Frank DeLoupe", tool: "mas" }
+  - { id: 748212890, name: "Memory Cleaner", tool: "mas" }
+  - { id: 540348655, name: "Monosnap", tool: "mas" }
+  - { id: 470158793, name: "Keka", tool: "mas" }
+  - { id: 494995266, name: "Tap Forms", tool: "mas" }
+  - { id: 404747434, name: "MenuPop", tool: "mas" }
+
+  # Quicklook Plugins
+  - { name: "suspicious-package", admin: False, tool: "cask" }
+  - { name: "qlcolorcode", admin: False, tool: "cask" }
+  - { name: "qlstephen", admin: False, tool: "cask" }
+  - { name: "qlmarkdown", admin: False, tool: "cask" }
+  - { name: "provisionql", admin: False, tool: "cask" }
+  - { name: "qlprettypatch", admin: False, tool: "cask" }
+  - { name: "quicklook-csv", admin: False, tool: "cask" }
+  - { name: "webpquicklook", admin: False, tool: "cask" }
+  - { name: "qlimagesize", admin: True, tool: "cask" }
+  - { name: "quicklook-json", admin: True, tool: "cask" }
+  - { name: "betterzipql", admin: True, tool: "cask" }
+
   # Firewall & Protective
-  - micro-snitch
+  - { name: "hma-pro-vpn", admin: True, tool: "cask" }
+  - { name: "micro-snitch", admin: True, tool: "cask" }
 
-  # Plugins
-  - qlimagesize
-  - quicklook-json
-  - betterzipql
+  # Development
+  # > C++
+  - { name: "boost", admin: False, tool: "brew" }
+  # > MachO dissassembler
+  - { name: "otx", admin: False, tool: "cask"}
+  - { name: "class-dump", admin: False, tool: "brew" }
+  - { name: "hopper-disassembler", admin: False, tool: "cask" }
+  - { name: "bit-slicer", admin: False, tool: "cask" }
+  # > SourceControl, Databases
+  - { name: "sourcetree", admin: False, tool: "cask" }
+  - { name: "sequel-pro", admin: False, tool: "cask" }
+  - { name: "sqlpro-for-sqlite", admin: False, tool: "cask" }
+  # > Editors
+  - { name: "sublime-text", admin: False, tool: "cask" }
+  - { name: "visual-studio-code", admin: False, tool: "cask" }
+  - { name: "coda", admin: False, tool: "cask" }
+  - { name: "phpstorm", admin: False, tool: "cask" }
+  - { name: "eclipse-rcp", admin: False, tool: "cask" }
+  # > CLI Utils
+  - { name: "httpie", admin: False, tool: "brew" }
+  - { name: "tree", admin: False, tool: "brew" }
+  - { name: "ssh-copy-id", admin: False, tool: "brew" }
+  # >> Pipe viewer
+  - { name: "pv", admin: False, tool: "brew" }
+  # >> converts bin images to iso
+  - { name: "bchunk", admin: False, tool: "brew" }
+
+  # Browsers, Email, Internet
+  - { name: "google-chrome", admin: False, tool: "cask"}
+  - { name: "firefox", admin: False, tool: "cask"}
+  - { name: "opera", admin: False, tool: "cask"}
+  - { name: "polymail", admin: False, tool: "cask"}
+  - { name: "skype", admin: False, tool: "cask"}
+  - { id: 918858936, name: "Airmail 3", tool: "mas" }
+  - { id: 747648890, name: "Telegram", tool: "mas" }
+
+  # Multimedia
+  - { name: "ffmpeg", admin: False, tool: "brew" }
+  - { name: "sketch", admin: False, tool: "cask" }
+  - { name: "blender", admin: False, tool: "cask" }
+  - { name: "mathtype", admin: False, tool: "cask" }
+  - { name: "skyfonts", admin: False, tool: "cask" }
 
   # Drivers & Services
-  - wacom-bamboo-tablet
-  - tuxera-ntfs
+  - { name: "tuxera-ntfs", admin: True, tool: "cask" }

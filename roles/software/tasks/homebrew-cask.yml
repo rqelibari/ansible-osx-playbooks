@@ -13,18 +13,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-- name: Install configured cask applications.
-  homebrew_cask: name={{package}} state=present
-  with_items: "{{ homebrew_cask_apps_noadmin }}"
-  loop_control:
-    label: "{{package}}"
-    loop_var: package
-
-- name: Install configured cask applications.
-  homebrew_cask: name={{package}} state=present
-  with_items: "{{ homebrew_cask_apps_admin }}"
-  loop_control:
-    label: "{{package}}"
-    loop_var: package
-  become: yes
-  become_user: root
+- name: Ensure homebrew cask package is installed.
+  homebrew_cask: name={{ item.name }} state=present
+  ignore_errors: yes

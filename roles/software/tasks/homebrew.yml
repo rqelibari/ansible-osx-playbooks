@@ -14,18 +14,11 @@
 #   limitations under the License.
 
 # Brew.
-- name: Ensure configured homebrew packages are installed.
-  homebrew: name={{package}} state=present
-  with_items: "{{ homebrew_installed_packages_noadmin }}"
-  loop_control:
-    label: "{{package}}"
-    loop_var: package
-
-- name: Ensure configured homebrew admin packages are installed.
-  homebrew: name={{package}} state=present
-  with_items: "{{ homebrew_installed_packages_admin }}"
-  loop_control:
-    label: "{{package}}"
-    loop_var: package
+- name: "Refresh sudo"
+  command: 'echo none'
   become: yes
   become_user: root
+
+- name: Ensure homebrew package is installed.
+  homebrew: name={{ item.name }} state=present
+  ignore_errors: yes

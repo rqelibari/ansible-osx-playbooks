@@ -26,4 +26,3 @@
   command: mas install "{{ item.id }}"
   args:
     creates: /Applications/{{ item.name }}.app
-  with_items: "{{mas_apps}}"
