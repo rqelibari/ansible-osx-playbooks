@@ -1,0 +1,193 @@
+---
+#   Copyright 2016 Rezart Qelibari
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+- name: "Close any open System Preferences panes."
+  command: "osascript -e \"tell application 'System Preferences' to quit\""
+  ignore_errors: yes
+
+###############################################################################
+# Define plist structures.                                                    #
+###############################################################################
+- name: "Define plist structures"
+  command: "/usr/libexecPlistBuddy -c 'Add {{command.key}} {{command.type}}' {{user.1.stdout}}/Library/Preferences/{{command.file}}"
+  with_items:
+    # Hotkeys
+    - {key: ":AppleSymbolicHotKeys", type: "dict", file: "com.apple.symbolichotkeys.plist"}
+    - {key: ":AppleSymbolicHotKeys:33", type: "dict", file: "com.apple.symbolichotkeys.plist"}
+    - {key: ":AppleSymbolicHotKeys:33:enabled", type: "bool", file: "com.apple.symbolichotkeys.plist"}
+    # Clock Announcement
+    - {key: ":TimeAnnouncementPrefs", type: "dict", file: "com.apple.speech.synthesis.general.prefs.plist"}
+    - {key: ":TimeAnnouncementPrefs:TimeAnnouncementsEnabled", type: "bool", file: "com.apple.speech.synthesis.general.prefs.plist"}
+    - {key: ":TimeAnnouncementPrefs:TimeAnnouncementsPhraseIdentifier", type: "string", file: "com.apple.speech.synthesis.general.prefs.plist"}
+    - {key: ":TimeAnnouncementPrefs:TimeAnnouncementsIntervalIdentifier", type: "string", file: "com.apple.speech.synthesis.general.prefs.plist"}
+    - {key: ":TimeAnnouncementPrefs:TimeAnnouncementsVoiceSettings", type: "dict", file: "com.apple.speech.synthesis.general.prefs.plist"}
+    - {key: ":TimeAnnouncementPrefs:TimeAnnouncementsVoiceSettings:CustomVolume", type: "float", file: "com.apple.speech.synthesis.general.prefs.plist"}
+
+
+###############################################################################
+# General commands.                                                           #
+###############################################################################
+- name: "Set settings by command."
+  command: "{{command.command}}"
+  register: command_result
+  ignore_errors: yes
+  with_items:
+    - {desc: "Disable displaysleep", command: "launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null"}
+    - {desc: "Show the library folder", command: "chflags nohidden {{ user.1.stdout }}/Library"}
+    # Hotkey
+    - {desc: "Disable hotkey", command: "/usr/libexec/PlistBuddy -c 'Set :AppleSymbolicHotKeys:33:enabled false' {{ user.1.stdout }}/Library/Preferences/com.apple.symbolichotkeys.plist"}
+    # Desktop
+    - {desc: "Show item info | Desktop", command: "/usr/libexec/PlistBuddy -c 'Set DesktopViewSettings:IconViewSettings:showItemInfo true' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Show label on right | Desktop", command: "/usr/libexec/PlistBuddy -c 'Set DesktopViewSettings:IconViewSettings:labelOnBottom false' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Enable snap to grid | Desktop", command: "/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:arrangeBy grid' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Increase grid space | Desktop", command: "/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:gridSpacing 100' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Set icon size | Desktop", command: "/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:iconSize 100' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+
+    - {desc: "Show item info | FK_StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set FK_StandardViewSettings:IconViewSettings:showItemInfo true' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Enable snap to grid | FK_StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Increase grid space | FK_StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Set icon size | FK_StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set :FK_StandardViewSettings:IconViewSettings:iconSize 100' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+
+    - {desc: "Show item info | StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set StandardViewSettings:IconViewSettings:showItemInfo true' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Enable snap to grid | StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:arrangeBy grid' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Increase grid space | StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:gridSpacing 100' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+    - {desc: "Set icon size | StandardViewSettings", command: "/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:iconSize 100' {{ user.1.stdout }}/Library/Preferences/com.apple.finder.plist"}
+
+    # Clock
+    - {desc: "Set TimeAnnouncementsEnabled", command: "/usr/libexec/PlistBuddy -c 'Set :TimeAnnouncementPrefs:TimeAnnouncementsEnabled true' {{ user.1.stdout }}/Library/Preferences/com.apple.speech.synthesis.general.prefs.plist"}
+    - {desc: "Set TimeAnnouncementsPhraseIdentifier", command: "/usr/libexec/PlistBuddy -c 'Set :TimeAnnouncementPrefs:TimeAnnouncementsPhraseIdentifier ShortTime' {{ user.1.stdout }}/Library/Preferences/com.apple.speech.synthesis.general.prefs.plist"}
+    - {desc: "Set TimeAnnouncementsIntervalIdentifier", command: "/usr/libexec/PlistBuddy -c 'Set :TimeAnnouncementPrefs:TimeAnnouncementsIntervalIdentifier EveryHourInterval' {{ user.1.stdout }}/Library/Preferences/com.apple.speech.synthesis.general.prefs.plist"}
+    - {desc: "Set CustomVolume", command: "/usr/libexec/PlistBuddy -c 'Set :TimeAnnouncementPrefs:TimeAnnouncementsVoiceSettings:CustomVolume 0.5' {{ user.1.stdout }}/Library/Preferences/com.apple.speech.synthesis.general.prefs.plist"}
+
+    - {desc: "Unload gamecenter", command: "launchctl unload /System/Library/LaunchAgents/com.apple.gamed.plist"}
+  loop_control:
+    label: "{{command.desc}}"
+    loop_var: command
+
+###############################################################################
+# Different Domains                                                           #
+###############################################################################
+- name: "Set other domain settings."
+  osx_defaults:
+    domain: "{{command.domain | default('NSGlobalDomain')}}"
+    key: "{{command.key}}"
+    type: "{{command.type}}"
+    value: "{{command.value}}"
+    host: "{{command.host | default(None)}}"
+  ignore_errors: yes
+  with_items:
+    # NSGlobalDomain
+    # - {desc: "Always show scrollbars", key: "AppleShowScrollBars", type: "string", value: "Always"}
+    - {desc: "Speed up windows resize of cocoa apps", key: "NSWindowResizeTime", type: "float", value: "0.001"}
+    - {desc: "Expand save panel by default", domain: "NSGlobalDomain", key: "NSNavPanelExpandedStateForSaveMode", type: "bool", value: true}
+    - {desc: "Expand save panel by default", domain: "NSGlobalDomain", key: "NSNavPanelExpandedStateForSaveMode2", type: "bool", value: true}
+    - {desc: "Expand print panel by default", domain: "NSGlobalDomain", key: "PMPrintingExpandedStateForPrint", type: "bool", value: true}
+    - {desc: "Expand print panel by default", domain: "NSGlobalDomain", key: "PMPrintingExpandedStateForPrint2", type: "bool", value: true}
+    - {desc: "Save to disk, not to icloud by default", key: "NSDocumentSaveNewDocumentsToCloud", type: "bool", value: false}
+    - {desc: "Disable smart quotes", domain: "NSGlobalDomain", key: "NSAutomaticQuoteSubstitutionEnabled", type: "bool", value: false}
+    - {desc: "Disable smart dashes", domain: "NSGlobalDomain", key: "NSAutomaticDashSubstitutionEnabled", type: "bool", value: false}
+    - {desc: "Enable full keyboard access for all controls", domain: "NSGlobalDomain", key: "AppleKeyboardUIMode", type: "integer", value: 3}
+    - {desc: "Disable auto-correct", domain: "NSGlobalDomain", key: "NSAutomaticSpellingCorrectionEnabled", type: "bool", value: false}
+    - {desc: "Enable subpixel font rendering on non-Apple LCDs", domain: "NSGlobalDomain", key: "AppleFontSmoothing", type: "integer", value: 2}
+    - {desc: "Show all filename extensions", domain: "NSGlobalDomain", key: "AppleShowAllExtensions", type: "bool", value: true}
+    - {desc: "Enable spring loading for directories", domain: "NSGlobalDomain", key: "com.apple.springing.enabled", type: "bool", value: true}
+    - {desc: "Remove the spring loading delay for directories", domain: "NSGlobalDomain", key: "com.apple.springing.delay", type: "float", value: 0}
+    - {desc: "Set trackpad speed", domain: "NSGlobalDomain", key: "com.apple.trackpad.scaling", type: "float", value: 6}
+
+    - {desc: "Disbale 'are you sure you want to open' dialog", domain: "com.apple.LaunchServices", key: "LSQuarantine", type: "bool", value: false}
+    # - {desc: "Disable resume system wide", domain: "com.apple.systempreferences", command: "NSQuitAlwaysKeepsWindows", type: "bool", value: false"}
+    - {desc: "Always show scrollbars", domain: "com.apple.systempreferences", key: "NSQuitAlwaysKeepsWindows", type: "bool", value: false}
+    - {desc: "Use scroll gesture with the Ctrl key to zoom", domain: "com.apple.universalaccess", key: "closeViewScrollWheelToggle", type: "bool", value: true}
+    - {desc: "Use scroll gesture with the Ctrl key to zoom", domain: "com.apple.universalaccess", key: "HIDScrollZoomModifierMask", type: "integer", value: 262144}
+    - {desc: "Follow the keyboard focus while zoomed in", domain: "com.apple.universalaccess", key: "closeViewZoomFollowsFocus", type: "bool", value: true}
+    - {desc: "Save screenshots to the desktop", domain: "com.apple.screencapture", key: "location", type: "string", value: '{{ user.1.stdout }}/Desktop'}
+    - {desc: "Save screenshots as pngs", domain: "com.apple.screencapture", key: "type", type: "string", value: 'png'}
+    # Finder
+    - {desc: "Disable window animations and Get Info animations", domain: "com.apple.finder", key: "DisableAllAnimations", type: "bool", value: true}
+    - {desc: "Show status bar", domain: "com.apple.finder", key: "ShowStatusBar", type: "bool", value: true}
+    - {desc: "Show path bar", domain: "com.apple.finder", key: "ShowPathbar", type: "bool", value: true}
+    - {desc: "Perform search on current folder first", domain: "com.apple.finder", key: "FXDefaultSearchScope", type: "string", value: "SCcf"}
+    - {desc: "Disable the warning when changing a file extension", domain: "com.apple.finder", key: "FXEnableExtensionChangeWarning", type: "bool", value: false}
+    - {desc: "Avoid creating .DS_Store files on network or USB volumes", domain: "com.apple.desktopservices", key: "DSDontWriteNetworkStores", type: "bool", value: true}
+    - {desc: "Avoid creating .DS_Store files on network or USB volumes", domain: "com.apple.desktopservices", key: "DSDontWriteUSBStores", type: "bool", value: true}
+    - {desc: "Use column view in all Finder windows by default", domain: "com.apple.finder", key: "FXPreferredViewStyle", type: "string", value: 'clmv'}
+    - {desc: "Disable the warning before emptying the Trash", domain: "com.apple.finder", key: "WarnOnEmptyTrash", type: "bool", value: false}
+    - {desc: "Expand save to pane", domain: "com.apple.finder", key: "FXInfoPanesExpanded -dict General", type: "bool", value: true OpenWith", type: "bool", value: true Privileges", type: "bool", value: true}
+
+    - {desc: "Disable disk image verification", domain: "com.apple.frameworks.diskimages", key: "skip-verify", type: "bool", value: true}
+    - {desc: "Disable locked disk image verification", domain: "com.apple.frameworks.diskimages", key: "skip-verify-locked", type: "bool", value: true}
+    - {desc: "Disable remote disk image verification", domain: "com.apple.frameworks.diskimages", key: "skip-verify-remote", type: "bool", value: true}
+    - {desc: "Enable AirDrop over Ethernet", domain: "com.apple.NetworkBrowser", key: "BrowseAllInterfaces", type: "bool", value: true}
+
+    # Dock
+    - {desc: "Enable spring loading for all Dock items", domain: "com.apple.dock", key: "enable-spring-load-actions-on-all-items", type: "bool", value: true}
+    - {desc: "Don’t show Dashboard as a Space", domain: "com.apple.dock", key: "dashboard-in-overlay", type: "bool", value: true}
+    - {desc: "Remove the auto-hiding Dock delay", domain: "com.apple.dock", key: "autohide-delay", type: "float", value: 0}
+    - {desc: "Remove the animation when hiding/showing the Dock", domain: "com.apple.dock", key: "autohide-time-modifier", type: "float", value: 0}
+    - {desc: "Set tl corner function", domain: "com.apple.dock", key: "wvous-tl-corner", type: "integer", value: 5}
+    - {desc: "Set tl modifier", domain: "com.apple.dock", key: "wvous-tl-modifier", type: "integer", value: 0}
+
+    # Safari
+    - {desc: "Dont send queries to apple", domain: "com.apple.Safari", key: "UniversalSearchEnabled", type: "bool", value: false}
+    - {desc: "Dont send queries to apple pt2", domain: "com.apple.Safari", key: "SuppressSearchSuggestions", type: "bool", value: true}
+    - {desc: "Press Tab to highlight each item on a web page", domain: "com.apple.Safari", key: "WebKitTabToLinksPreferenceKey", type: "bool", value: true}
+    - {desc: "Press Tab to highlight each item on a web page", domain: "com.apple.Safari", key: "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks", type: "bool", value: true}
+    - {desc: "Show the full URL in the address bar", domain: "com.apple.Safari", key: "ShowFullURLInSmartSearchField", type: "bool", value: true}
+    - {desc: "Set homepage to about blank", domain: "com.apple.Safari", key: "HomePage", type: "string", value: 'about:blank'}
+    - {desc: "Disable opening of safe downloads", domain: "com.apple.Safari", key: "AutoOpenSafeDownloads", type: "bool", value: false}
+    - {desc: "Allow hitting the Backspace key to get back", domain: "com.apple.Safari", key: "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled", type: "bool", value: true}
+    - {desc: "Disable Safari’s thumbnail cache", domain: "com.apple.Safari", key: "DebugSnapshotsUpdatePolicy", type: "integer", value: 2}
+    - {desc: "Enable Safari’s debug menu", domain: "com.apple.Safari", key: "IncludeInternalDebugMenu", type: "bool", value: true}
+    - {desc: "Enable developer menu and webinspector", domain: "com.apple.Safari", key: "IncludeDevelopMenu", type: "bool", value: true}
+    - {desc: "Enable developer menu and webinspector", domain: "com.apple.Safari", key: "WebKitDeveloperExtrasEnabledPreferenceKey", type: "bool", value: true}
+    - {desc: "Enable developer menu and webinspector", domain: "com.apple.Safari", key: "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled", type: "bool", value: true}
+    - {desc: "Show webinspector in web views", domain: "com.apple.Safari", key: "WebKitDeveloperExtras", type: "bool", value: true}
+    - {desc: "Disable auto-correct", domain: "com.apple.Safari", key: "WebAutomaticSpellingCorrectionEnabled", type: "bool", value: false}
+    - {desc: "Enable do not track", domain: "com.apple.Safari", key: "SendDoNotTrackHTTPHeader", type: "bool", value: true}
+
+    # Misc
+    - {desc: "TimeMachine dont offer backup volume", domain: "com.apple.TimeMachine", key: "DoNotOfferNewDisksForBackup", type: "bool", value: true}
+    - {desc: "Show all processes in Activity Monitor", domain: "com.apple.ActivityMonitor", key: "ShowCategory", type: "integer", value: 0}
+    - {desc: "Enable the debug menu in Disk Utility", domain: "com.apple.DiskUtility", key: "DUDebugMenuEnabled", type: "bool", value: true}
+    - {desc: "Show advanced image options", domain: "com.apple.DiskUtility", key: "advanced-image-options", type: "bool", value: true}
+    - {desc: "Prevent Photos from opening automatically", domain: "com.apple.ImageCapture", host: "currentHost", key: "disableHotPlug", type: "bool", value: true}
+    - {desc: "Disable gamed", domain: "com.apple.gamed", key: "disableHotPlug", type: "bool", value: true}
+
+    # AppStore
+    - {desc: "Enable the WebKit Developer Tools in MAS", domain: "com.apple.appstore", key: "WebKitDeveloperExtras", type: "bool", value: true}
+    - {desc: "Enable debug menu in MAS", domain: "com.apple.appstore", key: "ShowDebugMenu", type: "bool", value: true}
+    - {desc: "Enable the automatic update check for MAS", domain: "com.apple.SoftwareUpdate", key: "AutomaticCheckEnabled", type: "bool", value: true}
+    - {desc: "Check for software updates daily in MAS", domain: "com.apple.SoftwareUpdate", key: "ScheduleFrequency", type: "integer", value: 1}
+    - {desc: "Download newly available updates in background", domain: "com.apple.SoftwareUpdate", key: "AutomaticDownload", type: "integer", value: 1}
+    - {desc: "Install System data files & security updates", domain: "com.apple.SoftwareUpdate", key: "CriticalUpdateInstall", type: "integer", value: 1}
+    - {desc: "Automatically download apps purchased on other Macs", domain: "com.apple.SoftwareUpdate", key: "ConfigDataInstall", type: "integer", value: 1}
+    - {desc: "Turn on app auto-update", domain: "com.apple.commerce", key: "AutoUpdate", type: "bool", value: true}
+    - {desc: "Allow the App Store to reboot machine on macOS updates", domain: "com.apple.commerce", key: "AutoUpdateRestartRequired", type: "bool", value: true}
+
+    # Chrome
+    - {desc: "Disable the all too sensitive backswipe on trackpads", domain: "com.google.Chrome", key: "AppleEnableSwipeNavigateWithScrolls", type: "bool", value: false}
+    - {desc: "Use the system-native print preview dialog", domain: "com.google.Chrome", key: "DisablePrintPreview", type: "bool", value: false}
+    - {desc: "Expand the print dialog by default", domain: "com.google.Chrome", key: "PMPrintingExpandedStateForPrint2", type: "bool", value: true}
+
+    # Clock
+    - {desc: "Set date format", domain: "com.apple.menuextra.clock", key: "DateFormat", type: "string", value: 'EEE d MMM  HH:mm:ss'}
+
+    # Trackpad
+    - {desc: "Enable three finger drag", domain: "com.apple.AppleMultitouchTrackpad", key: "TrackpadThreeFingerDrag", type: "bool", value: true}
+    - {desc: "Enable three finger drag", domain: "com.apple.driver.AppleBluetoothMultitouch.trackpad", key: "TrackpadThreeFingerDrag", type: "bool", value: true}
+    - {desc: "Set trackpad three finger drag", domain: "NSGlobalDomain", host: "currentHost", key: "com.apple.trackpad.threeFingerDragGesture", type: "bool", value: true}
+  loop_control:
+    label: "{{command.desc}}"
+    loop_var: command

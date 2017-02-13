@@ -1,0 +1,27 @@
+---
+#   Copyright 2016 Rezart Qelibari
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+- include: osx-defaults-root.yml
+
+- include: osx-defaults.yml
+  become_user: "{{user.0}}"
+  become: yes
+  when: "'/var' not in {{user.1.stdout}}"
+  with_together:
+    - "{{f_userslist}}"
+    - "{{f_usershome}}"
+  loop_control:
+    label: "{{user.1.stdout}}"
+    loop_var: user

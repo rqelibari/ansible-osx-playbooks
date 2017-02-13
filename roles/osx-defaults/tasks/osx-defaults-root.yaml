@@ -1,0 +1,59 @@
+---
+#   Copyright 2016 Rezart Qelibari
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+###############################################################################
+# General commmands by root                                                   #
+###############################################################################
+- name: "Set settings by command run by root."
+  command: "{{command.command}}"
+  ignore_errors: yes
+  with_items:
+    - {desc: "Disable displaysleep", command: "pmset -a displaysleep 0"}
+    - {desc: "Disable disksleep", command: "pmset -a disksleep 0"}
+    - {desc: "Disable sleep", command: "pmset -a sleep 0"}
+    - {desc: "Enable powernap", command: "pmset -a powernap 1"}
+    - {desc: "Disable lidwake", command: "pmset -a lidwake 0"}
+    - {desc: "Disable acwake", command: "pmset -a acwake 0"}
+    - {desc: "Disable lessbright", command: "pmset -a lessbright 0"}
+    - {desc: "Disable hibernation", command: "pmset -a hibernatemode 0"}
+    - {desc: "Disable sudden motion sensor", command: "pmset -a sms 0"}
+    - {desc: "Restart automatically if the computer freezes", command: "systemsetup -setrestartfreeze on"}
+    - {desc: "Disable automatic sleep mode", command: "systemsetup -setcomputersleep Off > /dev/null"}
+    - {desc: "Show the Volumes folder", command: "chflags nohidden /Volumes"}
+    - {desc: "Disable local TimeMachine backups", command: "tmutil disablelocal"}
+  loop_control:
+    label: "{{command.desc}}"
+    loop_var: command
+  become: yes
+  become_user: root
+
+###############################################################################
+# Other Domains by root                                                       #
+###############################################################################
+- name: "Set other domain settings by root."
+  osx_defaults:
+    domain: "{{command.domain | default(NSGlobalDomain)}}"
+    key: "{{command.key}}"
+    type: "{{command.type}}"
+    value: "{{command.value}}"
+  ignore_errors: yes
+  with_items:
+    - {desc: "Reveal host information when clicking the clock in the login window", domain: "/Library/Preferences/com.apple.loginwindow", key: "AdminHostInfo", type: "string", value: "HostName"}
+    - {desc: "Disable automatic display light", domain: "/Library/Preferences/com.apple.iokit.AmbientLightSensor", key: "Automatic Display Enabled", type: "bool", value: false}
+  loop_control:
+    label: "{{command.desc}}"
+    loop_var: command
+  become: yes
+  become_user: root
