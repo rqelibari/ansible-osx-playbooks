@@ -12,12 +12,12 @@ automating all those steps.
 In my opinion [ansible][1] offers mainly four advantages:
 
 - **Oranization**: With [ansible][1] you are encouraged to organize your concerns. E.g. it takes
-			       care of automatically including files at the right position
+                   care of automatically including files at the right position
 - **Orchestration**: [ansible][1] can run the same tasks on many hosts. It manages
-				     all the trouble of connecting to those hosts and executing
-				     the tasks.
+                     all the trouble of connecting to those hosts and executing
+                     the tasks.
 - **Granulation**: With [ansible][1] one can adavance step by step or exclude tasks from beeing
-			       run (e.g. using [tags][2])
+                   run (e.g. using [tags][2])
 - **Idempotency**: [ansible][1] encourages to write idempotent tasks.
 
 # How is this organized?
@@ -31,6 +31,12 @@ Currently there are the following roles:
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |appmanager   |Makes sure a local app manager exists. A local app manager is a system user (uid <= 500), who has no administrator rights on the system, besides installing those apps, which do not need any special rights.|
 |homebrew     |Ensure homebrew is installed on the local machine. Homebrew needs a folder, where it can be installed to and a link in /usr/local/bin.|
+|homebrew_cask     |Ensure homebrew cask is tapped in homebrew, so software with a GUI can be installed.|
+|little-snitch|Ensure little-snitch is installed and properly configured.|
+|mas-cli|Ensure mas (Mac Appstore command line client) is installed.|
+|vim|Ensure vim is configured properly with plug and for all users.|
+|vim|Ensure VLC is installed with support for blurays.|
+|zsh|Ensure zsh is configured properly with zgen and set as standard shell for all users.|
 
 and the following playbooks:
 
