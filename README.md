@@ -35,7 +35,7 @@ Currently there are the following roles:
 |little-snitch|Ensure little-snitch is installed and properly configured.|
 |mas-cli|Ensure mas (Mac Appstore command line client) is installed.|
 |vim|Ensure vim is configured properly with plug and for all users.|
-|vim|Ensure VLC is installed with support for blurays.|
+|vlc|Ensure VLC is installed with support for blurays.|
 |zsh|Ensure zsh is configured properly with zgen and set as standard shell for all users.|
 
 and the following playbooks:
